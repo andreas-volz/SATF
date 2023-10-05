@@ -5,7 +5,7 @@ This project offers one solution for the problem to transfer 2D animations based
 
 The first example implementation toolchain is:
 
-* Blender 3D => SATF => Godot 2D
+* Blender 3D => Render Exporter Addon => SATF Transformator => Import Plugin for Godot (Sprite/AnimationPlayer/AnimationTree) => Godot 2D
 
 This project will concentrate on defining a JSON format and offer some example implementations.
 
