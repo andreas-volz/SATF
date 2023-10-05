@@ -141,7 +141,8 @@ def generate_trim_images(input_path: str, output_path: str) -> None:
             print("error: unexpected animation: " + animation)
     
     # delete global origin as for trimmed images the origin is written in each frame
-    del json_dict['origin']
+    if 'origin' in json_dict:
+        del json_dict['origin']
     # hint: global camera block is preserved as scene information as it doesn't hurt that much
     
     json_object = json.dumps(json_dict, indent=4)
@@ -209,8 +210,9 @@ def generate_merged_animations_metadata(merge_path: str, remove_merged_files: bo
 
 def generate_packed_texture(input_path: str, output_path: str):
     """
-        input: path to a folder with metadata.json
-        result: all referenced images are read and alpha area is trimmed; the rect is calculated and saved from bbox and global origin point
+        input: path to a folder with metadata.json and refenced images
+        output_path: to place the generated files
+        result: take all referenced animations/direction images from metadata and bin-pack them together into one big image sheet
     """
     json_dict = {}
     with open(input_path + '/' + "metadata.json") as file:
@@ -239,7 +241,7 @@ def generate_packed_texture(input_path: str, output_path: str):
             print("error: unexpected animation: " + animation)
     
     padding = 0
-    sorting = "maxarea" # maxwidth, maxheight
+    sorting = "maxarea" # maxwidth, maxheight maxarea
     maxdim = 16384 # maximum image dimension in Godot
     dest = output_path + '/' + "animations.png"
     placements = txtrpacker.txtrpacker.pack_images(image_list, padding, sorting, maxdim, dest)
@@ -272,11 +274,57 @@ def generate_packed_texture(input_path: str, output_path: str):
     with open(output_path + '/' + 'metadata.json', "w") as outfile:
         outfile.write(json_object)
     
+def generate_rotated_images(input_path: str, output_path: str) -> None:
+    """
+        input: path to a folder with metadata.json
+        output_path: rotate images and metadata
+    """
+    json_dict = {}
+    with open(input_path + '/' + "metadata.json") as file:
+      json_dict = json.load(file)
+
+    json_animations = json_dict['animations']
+
+    for animation in json_animations:
+        if isinstance(json_animations[animation], dict):
+            print("animation: " + animation)
+            for direction in json_animations[animation]:
+                if isinstance(json_animations[animation][direction], list):
+                    print("direction: " + direction)
+                    for frame in json_animations[animation][direction]:
+                        name = frame['name']
+                        input_png = input_path + '/' + animation + '/' + direction + '/' + name + '.png'
+                        output_png = output_path + '/' + animation + '/' + direction + '/' + name + '.png'
+                        
+                        image = Image.open(input_png)
+                        
+                        if image.width > image.height:
+                            image = image.transpose(Image.ROTATE_90)
+                            frame['rotated'] = True
+                            
+                        image.save(output_png)
+                        
+                else:
+                    print("error: unexpected direction: " + direction)
+        else:
+            print("error: unexpected animation: " + animation)
+    
+    # delete global origin as for trimmed images the origin is written in each frame
+    if 'origin' in json_dict:
+        del json_dict['origin']
+    # hint: global camera block is preserved as scene information as it doesn't hurt that much
+    
+    json_object = json.dumps(json_dict, indent=4)
+     
+    with open(output_path + '/' + 'metadata.json', "w") as outfile:
+        outfile.write(json_object)
+    
 ### main ####
 
 def main():
     # cleanup everything while development
     cleanup_dir("trimmed")
+    cleanup_dir("rotated")
     cleanup_dir("packed")
 
     metadata_input_list = search_metadata('input')
@@ -284,12 +332,17 @@ def main():
     for path in metadata_input_list:
         prepare_dir('trimmed/' + path)
 
+    for path in metadata_input_list:
+        prepare_dir('rotated/' + path)
+
     prepare_dir('packed')
 
     for path in metadata_input_list:
         generate_trim_images('input/' + path, 'trimmed/' + path)
-        
-    generate_merged_animations_metadata('trimmed')
+    
+    generate_merged_animations_metadata('trimmed', False) # False is to debug the json generation, in normal run it's ok to remove them
+    
+    #generate_rotated_images('trimmed', 'rotated')
 
     generate_packed_texture('trimmed', 'packed')
 
