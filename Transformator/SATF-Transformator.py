@@ -31,7 +31,7 @@ def search_metadata(input_path: str) -> list[str]:
     before_dir = os.getcwd()
     os.chdir(input_path)
     for dirpath, dirnames, filenames in os.walk("."):
-        #del dirnames[:] # remove the dirs to disable recusive search
+        #del dirnames[:] # remove the dirs to disable recursive search
         filenames.sort()
         for filename in filenames:
             if filename == 'metadata.json':
