@@ -4,7 +4,7 @@ Sprite Animation Transmission Format
 This project offers one solution for the problem to transfer 2D animations based on sprite sheets from one tool stack / framework to another. A tool could use this format direct or just import it into it's own format.
 
 ## Architecture Overview
-![SATF Architecture]([http://url/to/img.png](https://github.com/andreas-volz/SATF/blob/main/doc/SATF_Architecture.drawio.png))
+<img src="./doc/SATF_Architecture.drawio.png">
 
 The first example implementation toolchain is:
 
