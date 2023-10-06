@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-10-06T18:38:17.248Z" agent="Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/118.0" etag="PesCJaIJ5Y14Uwn680bM" version="22.0.3" type="github" pages="2">
+<mxfile host="app.diagrams.net" modified="2023-10-06T18:45:00.259Z" agent="Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/118.0" etag="5lC1Nyy3NzXXmtC0jy7s" version="22.0.3" type="github" pages="2">
   <diagram name="Architecture" id="sS9D55qsQwh3D_6DR1mg">
     <mxGraphModel dx="1394" dy="796" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -73,7 +73,7 @@
       </root>
     </mxGraphModel>
   </diagram>
-  <diagram id="i5X7nD4ilccfSGaLHs9z" name="Blender Godot Impl">
+  <diagram id="i5X7nD4ilccfSGaLHs9z" name="Blender_Godot_Impl">
     <mxGraphModel dx="1394" dy="796" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
