@@ -6,11 +6,10 @@ This project offers one solution for the problem to transfer 2D animations based
 ## Architecture Overview
 <img src="./doc/SATF_Architecture.drawio.png">
 
-The first example implementation toolchain is:
+## Reference Implementation (Blender => Godot)
+<img src="./doc/SATF_Architecture-Blender_Godot_Impl.drawio.png">
 
-* Blender 3D => Render Exporter Addon => SATF Transformator => Import Plugin for Godot (Sprite/AnimationPlayer/AnimationTree) => Godot 2D
-
-This project will concentrate on defining a JSON format and offer some example implementations.
+This project will concentrate on defining a JSON format and offer some reference implementations.
 
 Tools currently used and to be described:
 - https://www.blender.org/
