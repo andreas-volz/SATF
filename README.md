@@ -12,7 +12,7 @@ This project offers one solution for the problem to transfer 2D animations based
 This project will concentrate on defining a JSON format and offer some reference implementations.
 
 ## JSON Format defintion
-Below is a short snippet about how the JSON format. The format definion is a work in progress and will be specified while development of the reference implementation.
+Below is a short snippet about the JSON format. The format definion is a work in progress and will be specified while development of the reference implementation.
 ```
    ...(header)...
     "fps": 7.5,
