@@ -4,9 +4,9 @@ extends Sprite2D
 
 var json_dict: Dictionary
 
-@export_file("metadata.json") var metadata
-@export var animation_frame = 0 : set = set_animation_frame
+@export_file("metadata.json") var metadata = "" : set = set_metadata
 
+var animation_frame = 0 : set = set_animation_frame
 var animation: int = 0 : set = _set_animation_property
 var direction: int = 0 : set = _set_direction_property
 
@@ -25,17 +25,12 @@ func _ready() -> void:
 	if metadata == null:
 		return
 		
-	_read_metadata_json(metadata.get_base_dir())
-	_fill_inspector_animation_properties()
-	_load_textures(metadata.get_base_dir())
-		
-	centered = false
-	var animation_player = _fill_animation_player()
-	if animation_player:
-		_fill_animation_tree(animation_player)
+
 	
 func _load_textures(path: String):
 	var check_texture: String
+	
+	_texture_container.clear()
 	
 	check_texture = path + "/" + "animations.png"
 	if ResourceLoader.exists(check_texture):
@@ -137,7 +132,22 @@ func _fill_animation_tree(animation_player: SATFAnimationPlayer):
 			
 	#animation_tree.create_animation_transition("Start", "idle")
 
+func set_metadata(value):
+	metadata = value
+	
+	_read_metadata_json(metadata.get_base_dir())
+	_fill_inspector_animation_properties()
+	_load_textures(metadata.get_base_dir())
+		
+	centered = false
+	var animation_player = _fill_animation_player()
+	if animation_player:
+		_fill_animation_tree(animation_player)
+		
+	configure_animation(animation_property_array[animation], direction_property_array[direction], animation_frame)
+
 func _set_animation_property(value):
+	#print("_set_animation_property")
 	animation = value
 	direction = 0
 	
@@ -196,10 +206,19 @@ func _get_property_list() -> Array:
 		"hint": PROPERTY_HINT_ENUM,
 		"hint_string": direction_property_string
 	})
+	
+	properties.append({
+		"name": "animation_frame",
+		"type": TYPE_INT,
+		"usage": property_usage,
+		"hint": PROPERTY_HINT_RANGE,
+		"hint_string": "0,20,1"
+	})
 
 	return properties
 
 func _fill_inspector_animation_properties() -> void:
+	animation_property_array.clear()
 	for animation_name in json_dict['animations']:
 		animation_property_array.append(animation_name)
 
@@ -207,6 +226,7 @@ func _fill_inspector_animation_properties() -> void:
 	notify_property_list_changed()
 
 func _fill_inspector_direction_properties() -> void:
+	direction_property_array.clear()
 	for direction_name in json_dict['animations'][animation_property_array[animation]]:
 		direction_property_array.append(direction_name)
 	
