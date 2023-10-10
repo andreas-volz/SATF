@@ -292,7 +292,7 @@ def main():
                         action='store_true')  # on/off flag
 
     args = parser.parse_args()
-    print(args.inputpath, args.count, args.verbose)
+    #print(args.inputpath, args.count, args.verbose)
     
     input_path = args.inputpath
     packed_path = args.packedpath
