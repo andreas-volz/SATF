@@ -43,7 +43,7 @@ def search_metadata(input_path: str) -> list[str]:
     os.chdir(before_dir)
     return metadata_path_list
 
-def image_crop_alpha(image: Image) -> tuple[Image, tuple[int, int, int, int]]:
+def image_crop_alpha(image: Image, border: int = 0) -> tuple[Image, tuple[int, int, int, int]]:
     """
         input: PIL Image
         return: crop the alpha area at borders and return a tuple with the Image and cropped border rect (x, y, w, h)
@@ -57,13 +57,24 @@ def image_crop_alpha(image: Image) -> tuple[Image, tuple[int, int, int, int]]:
     # Determine the width and height of the cropped image
     (width, height) = image.size
     
+    # Add border
+    width += border * 2
+    height += border * 2
+    
+    # enlarge bbox for border
+    ret_bbox = []
+    ret_bbox.append(bbox[0] - border)
+    ret_bbox.append(bbox[1] - border)
+    ret_bbox.append(bbox[2] + border)
+    ret_bbox.append(bbox[3] + border)
+    
     # Create a new image object for the output image
     cropped_image = Image.new("RGBA", (width, height), (0, 0, 0, 0))
 
     # Paste the cropped image onto the new image
-    cropped_image.paste(image, (0, 0))
+    cropped_image.paste(image, (border, border))
 
-    return cropped_image, bbox
+    return cropped_image, ret_bbox
 
 def image_concat(im_list: list, vertical: bool = True) -> tuple[Image, list]:
     """
@@ -108,7 +119,7 @@ def image_add_border(image: Image) -> Image:
         
     return im_color
 
-def generate_trim_images(input_path: str, output_path: str) -> None:
+def generate_trim_images(input_path: str, output_path: str, border: int = 0) -> None:
     """
         input: path to a folder with metadata.json
         result: all referenced images are read and alpha area is trimmed; the rect is calculated and saved from bbox and global origin point
@@ -133,7 +144,7 @@ def generate_trim_images(input_path: str, output_path: str) -> None:
                         output_png = output_path + '/' + name + '.png'
                         
                         image = Image.open(input_png)
-                        image, bbox = image_crop_alpha(image)
+                        image, bbox = image_crop_alpha(image, border)
                         #image = image_add_border(image) # Border DEBUG!!!
                         image.save(output_png)
                         
@@ -243,7 +254,7 @@ def generate_packed_texture(input_path: str, output_path: str):
         else:
             print("error: unexpected animation: " + animation)
     
-    padding = 0
+    padding = 0 # we don't add padding here, we do it in the alpha trim function for easier bounding box calculation and the case one needs it on the single images
     sorting = "maxarea" # maxwidth, maxheight maxarea
     maxdim = 16384 # maximum image dimension in Godot
     dest = output_path + '/' + "animations.png"
@@ -286,10 +297,9 @@ def main():
                         epilog='(Trim - Merge - Pack)')
 
     parser.add_argument('inputpath')           # positional argument
-    parser.add_argument('packedpath')           # positional argument
-    #parser.add_argument('-c', '--count')      # option that takes a value
-    parser.add_argument('-v', '--verbose',
-                        action='store_true')  # on/off flag
+    parser.add_argument('packedpath')          # positional argument
+    parser.add_argument('-b', '--border', type=int, required=False)      # option that takes a value
+    parser.add_argument('-v', '--verbose', action='store_true')  # on/off flag
 
     args = parser.parse_args()
     #print(args.inputpath, args.count, args.verbose)
@@ -298,7 +308,11 @@ def main():
     packed_path = args.packedpath
     input_basename = os.path.basename(input_path)
     tmp_path = tempfile.gettempdir() + '/SATF/' + input_basename
-        
+    border: int = 0
+    
+    if args.border != None:
+        border = args.border
+            
     # cleanup everything while development
     cleanup_dir(tmp_path + '/trimmed')
     #cleanup_dir("rotated")
@@ -312,7 +326,7 @@ def main():
     prepare_dir(packed_path)
 
     for path in metadata_input_list:
-        generate_trim_images(input_path + '/' + path, tmp_path + '/trimmed/' + path)
+        generate_trim_images(input_path + '/' + path, tmp_path + '/trimmed/' + path, border)
     
     generate_merged_animations_metadata(tmp_path + '/trimmed', True) # False is to debug the json generation, in normal run it's ok to remove them
     
