@@ -15,7 +15,7 @@ var direction_property_array: Array[String] = []
 
 var _texture_container := {}
 
-var _shadow: PointLight2D = null
+var _shadow: SATFShadow = null
 
 func _enter_tree():
 	pass
@@ -281,9 +281,10 @@ func configure_animation(animation_name: String, direction_name: String, number:
 		region_enabled = false
 		region_rect = Rect2(0, 0, 0, 0)
 		
-	if _shadow != null and _shadow.texture != null:
+	if _shadow != null:
+		_shadow.texture_scale_xy = Vector2(region_rect.size.x * 2, region_rect.size.y)
 		#shadow.position.x = region_rect.size.x/2.0 + offset.x
 		#shadow.position.y = region_rect.size.y + offset.y
-		_shadow.texture.width = region_rect.size.x * 2
-		_shadow.texture.height = 80
+		#_shadow.texture.width = region_rect.size.x * 2
+		#_shadow.texture.height = region_rect.size.y 
 
