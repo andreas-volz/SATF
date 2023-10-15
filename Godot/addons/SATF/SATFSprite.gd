@@ -15,6 +15,8 @@ var direction_property_array: Array[String] = []
 
 var _texture_container := {}
 
+var _shadow: PointLight2D = null
+
 func _enter_tree():
 	pass
 	
@@ -25,8 +27,8 @@ func _ready() -> void:
 	if metadata == null:
 		return
 		
-
-	
+	_setup_shadow()
+		
 func _load_textures(path: String):
 	var check_texture: String
 	
@@ -126,12 +128,14 @@ func _fill_animation_tree(animation_player: SATFAnimationPlayer):
 
 			for direction_name in json_dict['animations'][animation_name]:
 				blend2d_node.create_animation_blend_point(animation_name, direction_name)
-
-			#if animation_name != "idle":
-			#animation_tree.create_animation_transition("idle", animation_name)
+				
+func _setup_shadow():
+	var child_nodes: Array[Node] = get_children()
+	for cn in child_nodes:
+		if cn is PointLight2D:
+			_shadow = cn
+			break
 			
-	#animation_tree.create_animation_transition("Start", "idle")
-
 func set_metadata(value):
 	metadata = value
 	
@@ -277,5 +281,9 @@ func configure_animation(animation_name: String, direction_name: String, number:
 		region_enabled = false
 		region_rect = Rect2(0, 0, 0, 0)
 		
-
+	if _shadow != null and _shadow.texture != null:
+		#shadow.position.x = region_rect.size.x/2.0 + offset.x
+		#shadow.position.y = region_rect.size.y + offset.y
+		_shadow.texture.width = region_rect.size.x * 2
+		_shadow.texture.height = 80
 
