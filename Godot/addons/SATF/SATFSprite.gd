@@ -192,7 +192,7 @@ func select_texture():
 func _get_property_list() -> Array:
 	var property_usage = PROPERTY_USAGE_DEFAULT
 
-	var animation_property_string = Utils.array_to_string(animation_property_array, ",")
+	var animation_property_string = SATFUtils.array_to_string(animation_property_array, ",")
 	var properties = []
 	properties.append({
 		"name": "animation",
@@ -202,7 +202,7 @@ func _get_property_list() -> Array:
 		"hint_string": animation_property_string
 	})
 	
-	var direction_property_string = Utils.array_to_string(direction_property_array, ",")
+	var direction_property_string = SATFUtils.array_to_string(direction_property_array, ",")
 	properties.append({
 		"name": "direction",
 		"type": TYPE_INT,

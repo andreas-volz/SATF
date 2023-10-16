@@ -11,5 +11,6 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if texture != null:
+		# TBD: bug
 		texture.width = texture_scale_xy.x * texture_scale_correction.x
 		texture.height = texture_scale_xy.y * texture_scale_correction.y

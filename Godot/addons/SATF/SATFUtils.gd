@@ -1,4 +1,4 @@
-class_name Utils
+class_name SATFUtils
 extends Node
 
 static func array_to_string(string_array: Array[String], separator: String) -> String:
