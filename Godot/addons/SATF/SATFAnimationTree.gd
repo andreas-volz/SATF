@@ -4,6 +4,8 @@ extends AnimationTree
 
 var _count = 0
 
+var animation_variant = "Animation"
+
 func _init() -> void:
 	create_animation_tree()
 
@@ -35,7 +37,7 @@ func create_animation_blend2d(animation_name : String) -> SATFAnimationNodeBlend
 		var x = 400
 		var y = _count * 100
 
-		print("add node: " + animation_name)
+		#print("add node: " + animation_name)
 		animation_statemachine.add_node(animation_name, blend2d_node, Vector2(x, y))
 		
 	_count += 1
@@ -58,6 +60,6 @@ func set_check(property: StringName, value: Variant):
 	if self.get(property) != null:
 		self.set(property, value)
 	else:
-		push_warning("Property not found: " + property)
+		print("Property not found: " + property)
 		
 	
