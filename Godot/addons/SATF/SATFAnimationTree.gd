@@ -4,7 +4,7 @@ extends AnimationTree
 
 var _count = 0
 
-var animation_variant = "Animation"
+@export var animation_variant = "Animation"
 
 func _init() -> void:
 	create_animation_tree()
