@@ -40,3 +40,4 @@ Tools currently used and to be described:
 - https://github.com/andreas-volz/blender-render-direction
 - https://github.com/brean/python-txtrpacker
 - https://godotengine.org/
+- https://pngquant.org/
