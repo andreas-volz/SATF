@@ -151,8 +151,9 @@ func set_metadata(value):
 	configure_animation(animation_property_array[animation], direction_property_array[direction], animation_frame)
 
 func _set_animation_property(value):
-	#print("_set_animation_property")
 	animation = value
+	# fill again after choosing animation in case different available directions
+	_fill_inspector_direction_properties()
 	direction = 0
 	
 	select_texture()
@@ -269,8 +270,13 @@ func configure_animation(animation_name: String, direction_name: String, number:
 		offset.x = -origin_json["x"]
 		offset.y = -origin_json["y"]
 	else:
-		offset.x = 0
-		offset.y = 0
+		if json_dict.has("origin"):
+			var origin = json_dict["origin"]
+			offset.x = origin.x
+			offset.y = origin.y
+		else:
+			offset.x = 0
+			offset.y = 0
 	
 	if frame_json.has("rect"):
 		var rect_json = frame_json["rect"]
