@@ -15,18 +15,15 @@ def main():
     ulpc_sheet_definitions_path = "/home/andreas/src/git/Universal-LPC-Spritesheet-Character-Generator/sheet_definitions"
     ulpc_spritesheets_path = "/home/andreas/src/git/Universal-LPC-Spritesheet-Character-Generator/spritesheets"
 
-    ulpc_asset_dict = {}
-    with open(input_path + '/' + "superman.json") as file:
-        ulpc_asset_dict = json.load(file)
 
     ulpc_dict = {}
-    with open(ulpc_sheet_definitions_path + '/' + "body.json") as file:
+    with open("lpc-animations.json") as file:
         ulpc_dict = json.load(file)
       
     ulpc_animations = ulpc_dict['animations']
     
     spec_dict = {}
-    with open(input_path + '/' + "animation-spec.json") as file:
+    with open("lpc-spec.json") as file:
         spec_dict = json.load(file)
         
     sprite_size = spec_dict['sprite_size']
@@ -56,14 +53,14 @@ def main():
                 print("frame information missing in animation: ", ulpc_anim)
                     
             row = spec_animations[ulpc_anim]['row']
-            direction_row = row
             #print(frames_count)
             for direction in spec_animations[ulpc_anim]['directions']:
                 x_pos = 0 # each new direction reset x
+                y_pos = row * sprite_size['h']  # each new direction move y cursor one sprite height down
                 
                 ulpc_satf_dict['animations'][ulpc_anim][direction] = []
                 for frame in custom_frames:
-                    x_pos = frame * sprite_size['w'] # each new frame move x cursor one sprite size to the right
+                    x_pos = frame * sprite_size['w'] # each new frame move x cursor one sprite width to the right
                     
                     frame_data = {}
                     anim_name = ulpc_anim + "_" + direction + "_" + str(frame).zfill(2)
@@ -71,18 +68,22 @@ def main():
                     frame_data['rect'] = {'x': x_pos, 'y': y_pos, 'w': sprite_size['w'], 'h': sprite_size['h']}
                     ulpc_satf_dict['animations'][ulpc_anim][direction].append(frame_data)
                     
+                row += 1
                     
-                direction_row += 1
-                y_pos = direction_row * sprite_size['h']  # each new direction move y cursor one sprite size down
-                    
-    
-    for asset_layer in ulpc_asset_dict['layers']:
-        copy_src = ulpc_spritesheets_path + "/" + asset_layer['fileName']
-        copy_dst = current_path + "/" + output_path + "/" + asset_layer['fileName']
-        print(copy_src)
-        print(copy_dst)
-        os.makedirs(os.path.dirname(copy_dst), exist_ok=True)
-        shutil.copy2(copy_src, copy_dst)
+ 
+# TODO: copy layers to output path
+
+#    ulpc_asset_dict = {}
+    #with open(input_path + '/' + "superman.json") as file:
+#        ulpc_asset_dict = json.load(file)
+
+#    for asset_layer in ulpc_asset_dict['layers']:
+#        copy_src = ulpc_spritesheets_path + "/" + asset_layer['fileName']
+#        copy_dst = current_path + "/" + output_path + "/" + asset_layer['fileName']
+        #print(copy_src)
+        #print(copy_dst)
+#        os.makedirs(os.path.dirname(copy_dst), exist_ok=True)
+#        shutil.copy2(copy_src, copy_dst)
 
     ## write metadata.json
 

@@ -1,0 +1,133 @@
+{
+	"fps": 8.0,
+	"sprite_size": {
+	    "w": 64,
+        "h": 64
+    },
+    "origin": {
+        "x": -32,
+        "y": -60
+    },
+    "animations": {
+        "spellcast": {
+			"frames": 7,
+			"row": 0,
+			"directions": [
+				"up", "left", "down", "right"
+			]
+		},
+        "thrust": {
+			"frames": 8,
+			"row": 4,
+			"directions": [
+				"up", "left", "down", "right"
+			]
+		},
+        "walk": {
+			"frames": 9,
+			"row": 8,
+			"directions": [
+				"up", "left", "down", "right"
+			]
+		},
+        "slash": {
+			"frames": 6,
+			"row": 12,
+			"directions": [
+				"up", "left", "down", "right"
+			]
+		},
+        "shoot": {
+			"frames": 13,
+			"row": 16,
+			"directions": [
+				"up", "left", "down", "right"
+			]
+		},
+        "hurt": {
+			"frames": 6,
+			"row": 20,
+			"directions": [
+				"down"
+			]
+		},
+        "watering": {
+			"custom_frames": [0, 1, 4, 4, 4, 4, 5],
+			"row": 4,
+			"directions": [
+				"up", "left", "down", "right"
+			]
+		},
+        "idle": {
+			"custom_frames": [0, 0, 1],
+			"row": 22,
+			"directions": [
+				"up", "left", "down", "right"
+			]
+		},
+        "jump": {
+			"custom_frames": [0, 1, 2, 3, 4, 1],
+			"row": 26,
+			"directions": [
+				"up", "left", "down", "right"
+			]
+		},
+        "run": {
+			"frames": 8,
+			"row": 34,
+			"directions": [
+				"up", "left", "down", "right"
+			]
+		},
+        "sit": {
+			"custom_frames": [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2],
+			"row": 30,
+			"directions": [
+				"up", "left", "down", "right"
+			]
+		},
+        "emote": {
+			"custom_frames": [3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5],
+			"row": 30,
+			"directions": [
+				"up", "left", "down", "right"
+			]
+		},
+        "climb": {
+			"frames": 6,
+			"row": 21,
+			"directions": [
+				"up"
+			]
+		},
+        "combat": {
+			"custom_frames": [2, 2, 3],
+			"row": 22,
+			"directions": [
+				"up", "left", "down", "right"
+			]
+		},
+        "1h_slash": {
+			"custom_frames": [0, 1, 2, 3, 4, 5, 6],
+			"row": 38,
+			"directions": [
+				"up", "left", "down", "right"
+			]
+		},
+        "1h_backslash": {
+			"custom_frames": [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12],
+			"row": 38,
+			"directions": [
+				"up", "left", "down", "right"
+			]
+		},
+        "1h_halfslash": {
+			"frames": 6,
+			"row": 42,
+			"directions": [
+				"up", "left", "down", "right"
+			]
+		}
+	}
+			
+}

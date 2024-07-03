@@ -2,9 +2,33 @@
 class_name SATFSprite
 extends Sprite2D
 
-var json_dict: Dictionary
+const direction_vectors_iso = {
+	"S" 	: Vector2(0, 1),
+	"N" 	: Vector2(0, -1),
+	"W" 	: Vector2(-1, 0),
+	"E"		: Vector2(1, 0),
+	"SW" 	: Vector2(-1, 1),
+	"SE" 	: Vector2(1, 1),
+	"NW" 	: Vector2(-1, -1),
+	"NE"	: Vector2(1, -1),
+}
+
+const direction_vectors_lpc = {
+	"up" 	: Vector2(0, -1),
+	"down" 	: Vector2(0, 1),
+	"left" 	: Vector2(-1, 0),
+	"right"	: Vector2(1, 0),
+}
+
+enum DirectionStandard {
+	ISO,
+	LPC
+}
 
 @export_file("metadata.json") var metadata = "" : set = set_metadata
+@export var direction_standard: DirectionStandard = 0
+
+var json_dict: Dictionary
 
 var animation_frame = 0 : set = set_animation_frame
 var animation: int = 0 : set = _set_animation_property
@@ -29,6 +53,8 @@ func _ready() -> void:
 		
 	_setup_shadow()
 		
+# this function loads the needed animation textures referenced in the json file
+# as it search textures in several places it's possible to "patch" a big textures single frame
 func _load_textures(path: String):
 	var check_texture: String
 	
@@ -127,7 +153,16 @@ func _fill_animation_tree(animation_player: SATFAnimationPlayer):
 			var blend2d_node: SATFAnimationNodeBlendSpace2D = animation_tree.create_animation_blend2d(animation_name)
 
 			for direction_name in json_dict['animations'][animation_name]:
-				blend2d_node.create_animation_blend_point(animation_name, direction_name)
+				
+				# primitive implementation to switch between ISO and LPC name "standard"
+				# if there is any need later make it flexible as exported list
+				var direction_vector: Vector2
+				if direction_standard == DirectionStandard.ISO:
+					direction_vector = direction_vectors_iso[direction_name]
+				elif direction_standard == DirectionStandard.LPC:
+					direction_vector = direction_vectors_lpc[direction_name]
+					
+				blend2d_node.create_animation_blend_point(animation_name, direction_name, direction_vector)
 				
 func _setup_shadow():
 	var child_nodes: Array[Node] = get_children()

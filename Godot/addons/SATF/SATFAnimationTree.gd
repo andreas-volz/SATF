@@ -4,7 +4,9 @@ extends AnimationTree
 
 var _count = 0
 
-@export var animation_variant = "Animation"
+# this variable could be used to decide in the statemachine which animation variant should be used
+# e.g. if a person has to different weapon types and both have all states (idle, run, attack,...)
+@export var animation_variant = ""
 
 func _init() -> void:
 	create_animation_tree()
