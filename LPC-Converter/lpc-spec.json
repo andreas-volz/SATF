@@ -65,6 +65,13 @@
 				"up", "left", "down", "right"
 			]
 		},
+        "still": {
+			"custom_frames": [0],
+			"row": 8,
+			"directions": [
+				"up", "left", "down", "right"
+			]
+		},
         "jump": {
 			"custom_frames": [0, 1, 2, 3, 4, 1],
 			"row": 26,
