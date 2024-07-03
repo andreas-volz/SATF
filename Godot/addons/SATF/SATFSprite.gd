@@ -267,10 +267,11 @@ func _fill_inspector_animation_properties() -> void:
 
 func _fill_inspector_direction_properties() -> void:
 	direction_property_array.clear()
-	for direction_name in json_dict['animations'][animation_property_array[animation]]:
-		direction_property_array.append(direction_name)
+	if animation_property_array.size() > animation:
+		for direction_name in json_dict['animations'][animation_property_array[animation]]:
+			direction_property_array.append(direction_name)
 	
-	notify_property_list_changed()
+		notify_property_list_changed()
 	
 func _read_metadata_json(path: String):
 	var file = path + "/metadata.json"

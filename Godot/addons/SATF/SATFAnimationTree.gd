@@ -58,10 +58,17 @@ func travel(to_node: String):
 	var _animation_state = get("parameters/playback")
 	_animation_state.travel(to_node)
 
-func set_check(property: StringName, value: Variant):
+# safe variant of set() to ensure not existing properties print a warning not an error
+func set_property(property: StringName, value: Variant):
 	if self.get(property) != null:
 		self.set(property, value)
 	else:
-		print("Property not found: " + property)
+		push_warning("Statemachine Property not found: " + property)
 		
+func set_condition(condition: StringName, value: bool):
+	var cond_str: String = "parameters/conditions/" + condition
+	set_property(cond_str, value)
 	
+func set_blend(animation_name: StringName, value: Variant):
+	var blend_str: String = "parameters/" + animation_name + "/blend_position"
+	set_property(blend_str, value)
