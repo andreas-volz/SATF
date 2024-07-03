@@ -4,15 +4,23 @@ import os
 import shutil
 import json
 import math
-
 import logging
 import argparse
 
 def main():
-    input_path = "assets"
+    input_path = "input"
+    output_path = "output"
+    current_path = "/home/andreas/src/git/SATF/LPC-Converter"
     
+    ulpc_sheet_definitions_path = "/home/andreas/src/git/Universal-LPC-Spritesheet-Character-Generator/sheet_definitions"
+    ulpc_spritesheets_path = "/home/andreas/src/git/Universal-LPC-Spritesheet-Character-Generator/spritesheets"
+
+    ulpc_asset_dict = {}
+    with open(input_path + '/' + "superman.json") as file:
+        ulpc_asset_dict = json.load(file)
+
     ulpc_dict = {}
-    with open(input_path + '/' + "body.json") as file:
+    with open(ulpc_sheet_definitions_path + '/' + "body.json") as file:
         ulpc_dict = json.load(file)
       
     ulpc_animations = ulpc_dict['animations']
@@ -34,7 +42,7 @@ def main():
     for ulpc_anim in ulpc_animations:
         spec_animations = spec_dict['animations']
         if ulpc_anim in spec_animations:
-            print(ulpc_anim)
+            #print(ulpc_anim)
             ulpc_satf_dict['animations'][ulpc_anim] = {}
             custom_frames = []
             
@@ -49,7 +57,7 @@ def main():
                     
             row = spec_animations[ulpc_anim]['row']
             direction_row = row
-            print(frames_count)
+            #print(frames_count)
             for direction in spec_animations[ulpc_anim]['directions']:
                 x_pos = 0 # each new direction reset x
                 
@@ -67,18 +75,18 @@ def main():
                 direction_row += 1
                 y_pos = direction_row * sprite_size['h']  # each new direction move y cursor one sprite size down
                     
-                
-            #ulpc_satf_dict['animation'][
-        
     
-    #print(json_animations)
-    
-## write
+    for asset_layer in ulpc_asset_dict['layers']:
+        copy_src = ulpc_spritesheets_path + "/" + asset_layer['fileName']
+        copy_dst = current_path + "/" + output_path + "/" + asset_layer['fileName']
+        print(copy_src)
+        print(copy_dst)
+        os.makedirs(os.path.dirname(copy_dst), exist_ok=True)
+        shutil.copy2(copy_src, copy_dst)
 
+    ## write metadata.json
 
     json_object = json.dumps(ulpc_satf_dict, indent=4)
-
-    output_path = "assets"
 
     with open(output_path + '/' + 'metadata.json', "w") as outfile:
         outfile.write(json_object)
