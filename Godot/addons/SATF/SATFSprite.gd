@@ -2,31 +2,33 @@
 class_name SATFSprite
 extends Sprite2D
 
-const direction_vectors_iso = {
-	"S" 	: Vector2(0, 1),
-	"N" 	: Vector2(0, -1),
-	"W" 	: Vector2(-1, 0),
-	"E"		: Vector2(1, 0),
-	"SW" 	: Vector2(-1, 1),
-	"SE" 	: Vector2(1, 1),
-	"NW" 	: Vector2(-1, -1),
-	"NE"	: Vector2(1, -1),
-}
+#const direction_vectors_iso = {
+	#"S" 	: Vector2(0, 1),
+	#"N" 	: Vector2(0, -1),
+	#"W" 	: Vector2(-1, 0),
+	#"E"		: Vector2(1, 0),
+	#"SW" 	: Vector2(-1, 1),
+	#"SE" 	: Vector2(1, 1),
+	#"NW" 	: Vector2(-1, -1),
+	#"NE"	: Vector2(1, -1),
+#}
+#
+#const direction_vectors_lpc = {
+	#"up" 	: Vector2(0, -1),
+	#"down" 	: Vector2(0, 1),
+	#"left" 	: Vector2(-1, 0),
+	#"right"	: Vector2(1, 0),
+#}
+#
+#enum DirectionStandard {
+	#ISO,
+	#LPC
+#}
 
-const direction_vectors_lpc = {
-	"up" 	: Vector2(0, -1),
-	"down" 	: Vector2(0, 1),
-	"left" 	: Vector2(-1, 0),
-	"right"	: Vector2(1, 0),
-}
-
-enum DirectionStandard {
-	ISO,
-	LPC
-}
+@export var direction_standard: SATFDirectionMapping
 
 @export_file("metadata.json") var metadata = "" : set = set_metadata
-@export var direction_standard: DirectionStandard = 0
+#@export var direction_standard: DirectionStandard = DirectionStandard.ISO
 
 var json_dict: Dictionary
 
@@ -127,11 +129,11 @@ func _fill_animation_player() -> SATFAnimationPlayer:
 
 	if animation_player:
 		var animation_counter = 0
+		var fps = json_dict['fps']
 		for animation_name in json_dict['animations']:
 			var direction_counter = 0
 			for direction_name in json_dict['animations'][animation_name]:
 				var frame_count = json_dict['animations'][animation_name][direction_name].size()
-				var fps = json_dict['fps']
 				animation_player.create_animation_resource(animation_name, direction_name, animation_counter, direction_counter,frame_count, fps)
 				direction_counter += 1
 			animation_counter += 1
@@ -157,11 +159,8 @@ func _fill_animation_tree(animation_player: SATFAnimationPlayer):
 				# primitive implementation to switch between ISO and LPC name "standard"
 				# if there is any need later make it flexible as exported list
 				var direction_vector: Vector2
-				if direction_standard == DirectionStandard.ISO:
-					direction_vector = direction_vectors_iso[direction_name]
-				elif direction_standard == DirectionStandard.LPC:
-					direction_vector = direction_vectors_lpc[direction_name]
-					
+				direction_vector = direction_standard.direction_vectors[direction_name]
+
 				blend2d_node.create_animation_blend_point(animation_name, direction_name, direction_vector)
 				
 func _setup_shadow():
@@ -259,11 +258,12 @@ func _get_property_list() -> Array:
 
 func _fill_inspector_animation_properties() -> void:
 	animation_property_array.clear()
-	for animation_name in json_dict['animations']:
-		animation_property_array.append(animation_name)
+	if not json_dict.is_empty():
+		for animation_name in json_dict['animations']:
+			animation_property_array.append(animation_name)
 
-	_fill_inspector_direction_properties()
-	notify_property_list_changed()
+		_fill_inspector_direction_properties()
+		notify_property_list_changed()
 
 func _fill_inspector_direction_properties() -> void:
 	direction_property_array.clear()
@@ -303,8 +303,8 @@ func configure_animation(animation_name: String, direction_name: String, number:
 	
 	if frame_json.has("origin"):
 		var origin_json = frame_json["origin"]
-		offset.x = -origin_json["x"]
-		offset.y = -origin_json["y"]
+		offset.x = -origin_json.x
+		offset.y = -origin_json.y
 	else:
 		if json_dict.has("origin"):
 			var origin = json_dict["origin"]
@@ -316,7 +316,7 @@ func configure_animation(animation_name: String, direction_name: String, number:
 	
 	if frame_json.has("rect"):
 		var rect_json = frame_json["rect"]
-		var frame_rect = Rect2(rect_json["x"], rect_json["y"], rect_json["w"], rect_json["h"])
+		var frame_rect = Rect2(rect_json.x, rect_json.y, rect_json.w, rect_json.h)
 		region_enabled = true
 		region_rect = frame_rect
 	else:

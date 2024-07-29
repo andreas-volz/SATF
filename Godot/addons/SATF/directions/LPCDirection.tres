@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="SATFDirectionMapping" load_steps=2 format=3 uid="uid://b7trlajkcfbtk"]
+
+[ext_resource type="Script" path="res://addons/SATF/SATFDirectionMapping.gd" id="1_gexf1"]
+
+[resource]
+script = ExtResource("1_gexf1")
+direction_vectors = {
+"down": Vector2(0, 1),
+"left": Vector2(-1, 0),
+"right": Vector2(1, 0),
+"up": Vector2(0, -1)
+}
