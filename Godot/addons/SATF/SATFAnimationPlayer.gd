@@ -25,4 +25,3 @@ func create_animation_resource(anim_name: String, direction : String, anim_num: 
 		animation_library.add_animation(full_name, animation)
 	
 	return animation
-

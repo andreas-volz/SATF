@@ -134,7 +134,7 @@ func _fill_animation_player() -> SATFAnimationPlayer:
 			var direction_counter = 0
 			for direction_name in json_dict['animations'][animation_name]:
 				var frame_count = json_dict['animations'][animation_name][direction_name].size()
-				animation_player.create_animation_resource(animation_name, direction_name, animation_counter, direction_counter,frame_count, fps)
+				animation_player.create_animation_resource(animation_name, direction_name, animation_counter, direction_counter, frame_count, fps)
 				direction_counter += 1
 			animation_counter += 1
 			
@@ -329,4 +329,3 @@ func configure_animation(animation_name: String, direction_name: String, number:
 		#shadow.position.y = region_rect.size.y + offset.y
 		#_shadow.texture.width = region_rect.size.x * 2
 		#_shadow.texture.height = region_rect.size.y 
-
