@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="SATFDirectionMapping" load_steps=2 format=3 uid="uid://b7trlajkcfbtk"]
 
-[ext_resource type="Script" path="res://addons/SATF/SATFDirectionMapping.gd" id="1_gexf1"]
+[ext_resource type="Script" uid="uid://j5wrr6h5q2ev" path="res://addons/SATF/SATFDirectionMapping.gd" id="1_gexf1"]
 
 [resource]
 script = ExtResource("1_gexf1")
