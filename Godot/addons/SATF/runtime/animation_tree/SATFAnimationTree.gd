@@ -6,21 +6,11 @@ var _count = 0
 
 # this variable could be used to decide in the statemachine which animation variant should be used
 # e.g. if a person has to different weapon types and both have all states (idle, run, attack,...)
-@export var animation_variant = ""
+# TODO: think about if this is needed
+#@export var animation_variant = ""
 
 func _init() -> void:
 	create_animation_tree()
-
-func _ready() -> void:
-	var anim_player_path: NodePath
-	var child_nodes: Array[Node] = get_parent().get_children()
-	for cn in child_nodes:
-		if cn is SATFAnimationPlayer:
-			anim_player_path = cn.get_path()
-			break
-	
-	anim_player = anim_player_path
-	active = true
 	
 func create_animation_tree() -> void:
 	# only create a new StateMachine in case it's not yet exsiting
@@ -39,7 +29,6 @@ func create_animation_blend2d(animation_name : String) -> SATFAnimationNodeBlend
 		var x = 400
 		var y = _count * 100
 
-		#print("add node: " + animation_name)
 		animation_statemachine.add_node(animation_name, blend2d_node, Vector2(x, y))
 		
 	_count += 1

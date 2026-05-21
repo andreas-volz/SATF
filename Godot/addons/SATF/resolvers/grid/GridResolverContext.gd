@@ -1,0 +1,6 @@
+class_name GridResolverContext
+extends RefCounted
+
+var grid_path_resolver: GridPathResolver
+var grid_animation_resolver: GridAnimationResolver
+var grid_rect_resolver: GridRectResolver

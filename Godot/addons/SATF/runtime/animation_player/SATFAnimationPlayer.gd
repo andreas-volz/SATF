@@ -19,7 +19,6 @@ func create_animation_resource(anim_name: String, direction : String, anim_num: 
 		existing_animation.remove_track(existing_animation.find_track(".:direction", Animation.TYPE_VALUE))
 		existing_animation.remove_track(existing_animation.find_track(".:animation_frame", Animation.TYPE_VALUE))
 		existing_animation.modify_resource(anim_num, direction_num, frame_count, fps)
-		#print("animation yet existing")
 	else:
 		animation.modify_resource(anim_num, direction_num, frame_count, fps)
 		animation_library.add_animation(full_name, animation)
