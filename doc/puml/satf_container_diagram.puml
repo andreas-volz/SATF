@@ -1,0 +1,41 @@
+@startuml
+
+skinparam linetype ortho
+skinparam shadowing true
+
+'left to right direction
+
+title SATF Container Diagram
+
+rectangle "Data" as Data #lightgray {
+    rectangle "Grid Sprites" as GridSprites #lightblue {
+      component [Grid Animation Specification] as GridSpec
+      component [Grid Layer Data] as GridLayerData
+    }
+
+    rectangle "FreeRect Sprites" as FreeRectSprites #yellow {
+      component [FreeRect Animation Data] as FreeRectAnimationData
+      component [FreeRect Layer Data] as FreeRectLayerData
+    }
+}
+
+rectangle "SATF" as SATF #pink {
+  component [Domain Model] as SATFModel
+  component [Resource] as SATFResource
+}
+
+rectangle "Game" as Game #orange {
+  component [SATF Godot Addon - Runtime] as SATFRuntime
+  component [Character Integration] as CharacterIntegration
+}
+
+' connections
+Data --> SATF
+SATF --> Game
+
+' notes
+note left of FreeRectSprites
+➩ Not yet implemented!
+end note
+
+@enduml
