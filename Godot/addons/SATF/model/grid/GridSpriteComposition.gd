@@ -9,7 +9,7 @@ var _grid_spec: GridSpecData = null
 ## Layer-based animation data
 var _grid_layers: GridLayerCollection = null
 
-var _material_registry: MaterialRegistry = null
+var _material_registry: LPCPaletteCatalog = null
 
 # TODO: think about to put this somewhere else as SATF* is the wrong architecture layer here
 var _direction_mapping: SATFDirectionMapping = null
@@ -17,7 +17,7 @@ var _direction_mapping: SATFDirectionMapping = null
 ## --- Public Functions ---
 
 ## Compose spec and layers into a single normalized SpriteDefinition (grid-based)
-func compose(grid_spec_param: GridSpecData, grid_layers_param: GridLayerCollection, material_registry_param: MaterialRegistry) -> void:
+func compose(grid_spec_param: GridSpecData, grid_layers_param: GridLayerCollection, material_registry_param: LPCPaletteCatalog) -> void:
 	_grid_spec = grid_spec_param
 	_grid_layers = grid_layers_param
 	_material_registry = material_registry_param

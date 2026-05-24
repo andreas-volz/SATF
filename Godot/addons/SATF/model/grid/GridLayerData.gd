@@ -29,7 +29,7 @@ var z_index := OptionalInt.new()
 ## This is later in the pipeline used to build a path
 var asset_reference := AssetReference.new()
 
-var palette_mappings: Array[PaletteMapping] = []
+var palette_bindings: Array[PaletteBinding] = []
 
 func get_animation_names() -> Array:
 	return animations.keys()
@@ -55,13 +55,13 @@ func to_dict() -> Dictionary:
 	if group.has_value():
 		layer_data_dict["group"] = group.get_or()
 		
-	if not palette_mappings.is_empty():
-		layer_data_dict["palette_mappings"] = []
+	if not palette_bindings.is_empty():
+		layer_data_dict["palette_bindings"] = []
 		
 	# TODO implement writing to json
 	# TODO create a reference palette section in the layer data beside "animations"
-	#for palette_mapping: PaletteMapping in palette_mappings:
-		#layer_data_dict["palette_mappings"].append(palette_mapping.to_dict())
+	#for palette_bindings: PaletteBinding in palette_bindings:
+		#layer_data_dict["palette_bindings"].append(palette_bindings.to_dict())
 	
 	layer_data_dict["animations"] = {}
 	for animation_name in animations:

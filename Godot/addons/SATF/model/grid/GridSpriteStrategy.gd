@@ -49,7 +49,7 @@ func normalize(grid_sprite_composition: GridSpriteComposition, preview: bool = f
 		## transform the recolors palette data from the string format into the index format
 		var source_colors: PackedColorArray
 		var targets_colors: PackedColorArray
-		for palette_mapping: PaletteMapping in layer_data.palette_mappings:
+		for palette_mapping: PaletteBinding in layer_data.palette_bindings:
 			# transform the hex-coded colors into PackedColorArray 
 			for color in palette_mapping.source_colors: 
 				source_colors.push_back(Color.html(color))

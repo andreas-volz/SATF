@@ -4,6 +4,12 @@ extends LayerSprite2D
 
 signal animation_frame_changed(value: int)
 
+enum BoundsMode {
+	RESOURCE,
+	ANIMATION,
+	FRAME
+}
+
 const COLOR_PALETTE_SWAP = preload("uid://c3kw652smxy7b")
 
 # pattern to ensure both setters have run before the _apply_satf_sprite_resource() is able to work
@@ -30,6 +36,7 @@ var _frame_dirty := false
 
 func _ready() -> void:
 	super._ready()
+	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	if _satf_sprite_resource_ready == true and _graphic_root_path_ready == true:
 		_apply_satf_sprite_resource()
 	
@@ -335,11 +342,22 @@ func _get_property_list() -> Array:
 
 	return properties
 	
+func has_valid_direction(directions_mask: int, dir: int) -> bool:
+	return directions_mask & (1 << dir)
+
+func get_bounds(mode: BoundsMode) -> Rect2:
+	if not satf_sprite_resource:
+		return Rect2(0, 0, 0, 0,)
+		
+	# TODO make a version that react on BoundsMode
+	return satf_sprite_resource.max_bounding_box
+	
+## -------------------------
+## Internal API
+## -------------------------
+	
 func _cache_animation_names():
 	_animation_names.clear()
 	if satf_sprite_resource:
 		for animation_frames: SATFAnimationFrames in satf_sprite_resource.animations:
 			_animation_names.append(animation_frames.name)
-
-func has_valid_direction(directions_mask: int, dir: int) -> bool:
-	return directions_mask & (1 << dir)

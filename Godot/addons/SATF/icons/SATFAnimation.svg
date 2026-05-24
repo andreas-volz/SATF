@@ -4,8 +4,8 @@
    height="16"
    version="1.1"
    id="svg1"
-   sodipodi:docname="icon.svg"
-   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   sodipodi:docname="SATFAnimation.svg"
+   inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -22,10 +22,10 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:zoom="53.125"
-     inkscape:cx="8.0094118"
+     inkscape:cx="8.0188235"
      inkscape:cy="8"
      inkscape:window-width="1880"
-     inkscape:window-height="1052"
+     inkscape:window-height="1048"
      inkscape:window-x="1920"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -34,5 +34,5 @@
      fill="#e0e0e0"
      d="M12 14a2 2 0 0 0 2 2h1v-2h-.5a.5.5 0 0 1-.5-.5V8a6 6 0 1 0-2 4.465zM8 3a1 1 0 0 1 0 2 1 1 0 0 1 0-2zm3.441 2a1 1 0 0 1 0 2 1 1 0 0 1 0-2zM4.488 5a1 1 0 0 1 0 2 1 1 0 0 1 0-2zm.024 4a1 1 0 0 1 0 2 1 1 0 0 1 0-2zm6.904 0a1 1 0 0 1 0 2 1 1 0 0 1 0-2zM8 11a1 1 0 0 1 0 2 1 1 0 0 1 0-2z"
      id="path1"
-     style="fill:#ff00d5;fill-opacity:1" />
+     style="fill:#e288b5;fill-opacity:1" />
 </svg>
