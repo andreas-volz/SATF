@@ -2,6 +2,10 @@ class_name GridSpriteStrategy
 extends RefCounted
 
 var _grid_resolver_context: GridResolverContext
+var _direction_mapping: SATFDirectionMapping
+
+func set_satf_direction_mapping(direction_mapping_param: SATFDirectionMapping):
+	_direction_mapping = direction_mapping_param
 
 func set_resolver_context(context: GridResolverContext):
 	_grid_resolver_context = context
@@ -10,15 +14,15 @@ func set_resolver_context(context: GridResolverContext):
 ## preview=true does only generate the very first animation to have a fast preview
 func normalize(grid_sprite_composition: GridSpriteComposition, preview: bool = false) -> SATFSpriteResource:
 	var res := SATFSpriteResource.new()
-	var spec := grid_sprite_composition._grid_spec
-	var layers := grid_sprite_composition._grid_layers
+	var spec := grid_sprite_composition.grid_spec_data
+	var layers := grid_sprite_composition.grid_layer_collection
 	var texture_slot_registry_map: Dictionary = {} # key=String(path), value=TextureSlot
 	var texture_slot_registry_index: Dictionary = {} # key=String(path), value=int(index in res.texture_slot_registry)
 	var frame_set_registry_map: Dictionary = {} # key=int(hash_signature), value=SATFFrameRects
 	var frame_set_registry_index: Dictionary = {} # key=int(hash_signature), value=int(index in res.frame_set_registry)
 	var used_animation_name_list: Array[StringName] = []
 	
-	var direction_mapping: Array[SATFDirection] = grid_sprite_composition._direction_mapping.direction_mapping
+	var direction_mapping: Array[SATFDirection] = _direction_mapping.direction_mapping
 	var direction_mapping_index: Dictionary = {} # key=String(name), value=int(index in Array)
 	
 	# build Dictionary to access the direction index by name
@@ -33,7 +37,7 @@ func normalize(grid_sprite_composition: GridSpriteComposition, preview: bool = f
 		if preview_added:
 			break
 		var animation_names := layer.get_animation_names()
-		for anim_name:String in animation_names:
+		for anim_name: String in animation_names:
 			if preview_added:
 				break
 			if not animation_names_combined.has(anim_name):
@@ -189,7 +193,7 @@ func normalize(grid_sprite_composition: GridSpriteComposition, preview: bool = f
 			
 		res.animations.append(satf_animation_frames)
 	
-	res.direction_standard = grid_sprite_composition._direction_mapping
+	res.direction_standard = _direction_mapping
 	
 	return res
 	

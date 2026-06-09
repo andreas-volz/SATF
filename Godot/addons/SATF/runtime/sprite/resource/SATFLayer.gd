@@ -7,5 +7,3 @@ extends Resource
 @export var z_index: int
 
 @export var recolor: SATFRecolor
-
-#@export var recolors: Array[SATFRecolorBinding] = []

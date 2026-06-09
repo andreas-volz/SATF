@@ -118,11 +118,7 @@ func _select_texture():
 		#print("_select_texture():")
 		for layer_i in satf_sprite_resource.layers.size():
 			var layer: SATFLayer = satf_sprite_resource.layers[layer_i]
-			
-			#if layer.animations.size() <= animation:
-				## this ensures the typical case that 
-				#continue
-			
+
 			var layer_animation: SATFLayerAnimation = layer.animations[animation]
 			
 			var texture_slot: TextureSlot
@@ -283,7 +279,7 @@ func _fill_animation_tree():
 
 		for direction_id in range(directions.size()):
 			if directions[direction_id] != null:
-				var direction_name: String= satf_sprite_resource.direction_standard.direction_mapping[direction_id].name
+				var direction_name: String = satf_sprite_resource.direction_standard.direction_mapping[direction_id].name
 				var direction_vector: Vector2 = satf_sprite_resource.direction_standard.direction_mapping[direction_id].vector
 
 				blend2d_node.create_animation_blend_point(animation_name, direction_name, direction_vector)

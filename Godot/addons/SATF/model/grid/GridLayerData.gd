@@ -10,15 +10,11 @@ var layer_id := OptionalStringName.new()
 var animations: Dictionary
 
 ## Target slot in the final sprite.
-## The slot enforces that only one asset can be active per slot.
-## Assigning a new asset to the same slot replaces the previous one.
-## Example: "head" ensures only one head asset is active at a time.
+## TODO: deprecated?
 var slot := OptionalStringName.new()
 
 ## Logical grouping identifier for related layers.
-## Multiple layers sharing the same group can be controlled together.
-## Example: a sword may consist of several layers; using the same group
-## allows toggling visibility for all layers of the sword at once.
+## TODO: document the use case for this
 var group := OptionalStringName.new()
 
 ## Rendering order of the layer.

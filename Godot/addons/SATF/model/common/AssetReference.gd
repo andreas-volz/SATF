@@ -9,6 +9,11 @@ func _init(base_path_param: String = "", variant_param: String = "") -> void:
 	if not variant_param.is_empty():
 		variant.set_value(variant_param)
 
+func equals(ref: AssetReference) -> bool:
+	if base_path == ref.base_path and variant.get_or() == ref.variant.get_or():
+		return true
+	return false
+
 func clone() -> AssetReference:
 	return AssetReference.new(base_path, variant.get_or())
 

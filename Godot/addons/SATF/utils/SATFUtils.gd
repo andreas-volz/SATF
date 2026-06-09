@@ -1,6 +1,8 @@
 class_name SATFUtils
 extends RefCounted
 
+# TODO test type_convert() if this could replace some implementations
+
 # if ignore_null=true then ignore if an Array entry  is null, but then code the position
 # this is helpful for editor property lists to save an enum value
 # e.g. ["first", "second", null, "fourth"] => "first: 0, second: 1, fourth: 3"

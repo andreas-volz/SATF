@@ -26,6 +26,10 @@ func parse_dict(dict_data: Dictionary) -> void:
 		var animations_dict: Dictionary = dict_data["animations"]
 		_parse_animations(animations_dict)
 
+func load_from_path(path: String):
+	var grid_spec_dict: Dictionary = JsonVFS.json_from_file(path)
+	parse_dict(grid_spec_dict)
+
 ## Return all animation names
 func get_animation_names() -> Array:
 	return _animations.keys()

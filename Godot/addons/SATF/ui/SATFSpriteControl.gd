@@ -1,3 +1,4 @@
+@tool
 class_name SATFSpriteControl
 extends Control
 
@@ -9,9 +10,13 @@ enum SizeSource {
 @export var satf_sprite: SATFSprite
 @export var create_animation_player: bool = false
 @export var create_animation_tree: bool = false
-@export var size_source := SizeSource.CONTAINER:
+@export var size_source := SizeSource.CONTAINER :
 	set(value):
 		size_source = value
+		update_minimum_size()
+@export var sprite_scale := Vector2.ONE :
+	set(value):
+		sprite_scale = value
 		update_minimum_size()
 		
 func _ready() -> void:
@@ -22,6 +27,7 @@ func _ready() -> void:
 
 	satf_sprite.animation_frame_changed.connect(_on_animation_frame_changed)
 	
+	
 func _get_minimum_size() -> Vector2:
 	if size_source == SizeSource.CONTAINER:
 		return Vector2.ZERO
@@ -29,7 +35,7 @@ func _get_minimum_size() -> Vector2:
 	if not satf_sprite:
 		return Vector2.ZERO
 
-	var minimum_size: Vector2 = satf_sprite.get_bounds(SATFSprite.BoundsMode.RESOURCE).abs().size
+	var minimum_size: Vector2 = satf_sprite.get_bounds(SATFSprite.BoundsMode.RESOURCE).abs().size * sprite_scale
 	return minimum_size
 	
 static func _internal_create(control: SATFSpriteControl, animation_player: bool = false, animation_tree: bool = false):
@@ -78,13 +84,13 @@ func _on_update_sprite_transform() -> void:
 func _apply_fit_container(bounds_size: Vector2) -> void:
 	var scale_factor := min(size.x / bounds_size.x, size.y / bounds_size.y)
 
-	satf_sprite.scale = Vector2.ONE * scale_factor
+	satf_sprite.scale = Vector2.ONE * scale_factor * sprite_scale
 
 	# place in the local middle position - better for UI
 	satf_sprite.position = size * 0.5 
 
 func _apply_size_to_content(bounds_size: Vector2) -> void:
-	satf_sprite.scale = Vector2.ONE
+	satf_sprite.scale = sprite_scale
 
 	# place in the local middle position - better for UI
-	satf_sprite.position = bounds_size * 0.5
+	satf_sprite.position = bounds_size * sprite_scale * 0.5

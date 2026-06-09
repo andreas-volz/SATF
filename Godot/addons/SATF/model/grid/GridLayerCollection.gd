@@ -84,13 +84,13 @@ func _rebuild_lookup() -> void:
 			_layer_lookup[layer.layer_id.get_or()] = i
 
 # TODO: this code in not yet tested and verified!
-func _validate_unique_ids() -> bool:
-	var seen: Dictionary = {}
-	for layer: GridLayerData in _layers:
-		if not layer.layer_id.has_value():
-			continue
-		var id := layer.layer_id.get_or()
-		if seen.has(id):
-			return false
-		seen[id] = true
-	return true
+#func _validate_unique_ids() -> bool:
+	#var seen: Dictionary = {}
+	#for layer: GridLayerData in _layers:
+		#if not layer.layer_id.has_value():
+			#continue
+		#var id := layer.layer_id.get_or()
+		#if seen.has(id):
+			#return false
+		#seen[id] = true
+	#return true
