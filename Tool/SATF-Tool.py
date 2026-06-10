@@ -192,7 +192,7 @@ def merge_animations_metadata(base_dict, add_dict) -> None:
                         print("error: unexpected direction: " + direction)
         else:
             print("error: unexpected animation: " + add_anim)
-    
+
 def generate_merged_animations_metadata(merge_path: str, remove_merged_files: bool = True):
     metadata_trimmed_list = search_metadata(merge_path)
 
@@ -308,6 +308,8 @@ def main():
     packed_path = args.packedpath
     input_basename = os.path.basename(input_path)
     tmp_path = tempfile.gettempdir() + '/SATF/' + input_basename
+    
+    # TODO: document the border option; it's e.g. helpful if you plan to draw a shader effect inside the texture region_rect
     border: int = 0
     
     if args.border != None:
@@ -325,7 +327,6 @@ def main():
 
     prepare_dir(packed_path)
 
-    # TODO: to make trim working with e.g. LPC assets it needs to cut the assets before in pieces
     for path in metadata_input_list:
         generate_trim_images(input_path + '/' + path, tmp_path + '/trimmed/' + path, border)
     
