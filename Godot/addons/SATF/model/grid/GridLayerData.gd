@@ -9,12 +9,8 @@ var layer_id := OptionalStringName.new()
 ## key: String, value: GridLayerAnimation
 var animations: Dictionary
 
-## Target slot in the final sprite.
-## TODO: deprecated?
-var slot := OptionalStringName.new()
-
 ## Logical grouping identifier for related layers.
-## TODO: document the use case for this
+## TODO: document the use case for this - if needed or remove itz
 var group := OptionalStringName.new()
 
 ## Rendering order of the layer.
@@ -41,10 +37,7 @@ func to_dict() -> Dictionary:
 	
 	if layer_id.has_value():
 		layer_data_dict["layer_id"] = layer_id.get_or()
-		
-	if slot.has_value():
-		layer_data_dict["slot"] = slot.get_or()
-		
+				
 	if z_index.has_value():
 		layer_data_dict["z_index"] = z_index.get_or()
 		

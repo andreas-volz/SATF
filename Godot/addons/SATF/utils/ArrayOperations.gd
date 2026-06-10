@@ -70,3 +70,33 @@ static func union_array_append_unique(array: Array, element: Variant) -> Array:
 		array_new.append(element)
 
 	return array_new
+
+## Returns a new array containing only elements from source that are not present in exclude.
+## Uses a dictionary-based lookup for O(1) membership checks.
+## Preserves the original order of elements from source.
+static func difference(source: Array, exclude: Array) -> Array:
+	var result: Array = []
+	var exclude_set := {}
+
+	for e in exclude:
+		exclude_set[e] = true
+
+	for s in source:
+		if not exclude_set.has(s):
+			result.append(s)
+
+	return result
+
+## Returns a new array with duplicate values removed while preserving order.
+## Uses a dictionary to track already seen elements for O(1) lookup.
+## Only the first occurrence of each value is kept.
+static func unique(array: Array) -> Array:
+	var result: Array = []
+	var seen := {}
+
+	for v in array:
+		if not seen.has(v):
+			seen[v] = true
+			result.append(v)
+
+	return result

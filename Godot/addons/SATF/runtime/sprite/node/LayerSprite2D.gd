@@ -78,8 +78,12 @@ func set_layer_region_rect(region_rect_param: Rect2i, layer: int):
 
 func set_region_enabled(region_enabled_param: bool):
 	region_enabled = region_enabled_param
-	for child in layer_node.get_children():
-		child.region_enabled = region_enabled
+	for sprite: Sprite2D in layer_node.get_children():
+		sprite.region_enabled = region_enabled
+
+func set_all_visible(visible_param: bool):
+	for sprite: Sprite2D in layer_node.get_children():
+		sprite.visible = visible_param
 
 func set_layer_visible(visible_param: bool, layer: int):
 	if layer < layer_count:
