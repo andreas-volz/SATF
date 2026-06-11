@@ -43,9 +43,9 @@ func _init(parent_param: GridSpecData, dict_data: Dictionary = {}) -> void:
 	if _parent == null:
 		push_error("Parent of GridSpecAnimation shouldn't be null!")
 	elif dict_data:
-		parse_dict(dict_data)
+		from_dict(dict_data)
 
-func parse_dict(dict_data: Dictionary) -> void:
+func from_dict(dict_data: Dictionary) -> void:
 	if dict_data.has("inherits_from"):
 		var inherits_from := SATFUtils.variant_to_string(dict_data.get("inherits_from"))
 		_inherits_from.set_value(inherits_from)

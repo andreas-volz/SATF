@@ -16,10 +16,10 @@ var _animations: Dictionary      # (animation_name: String)->{GridSpecAnimation}
 ## Initialize from JSON dictionary
 func _init(dict_data: Dictionary = {}) -> void:
 	if dict_data:
-		parse_dict(dict_data)
+		from_dict(dict_data)
 
 ## Parse (JSON) Dictionary and populate internal structures
-func parse_dict(dict_data: Dictionary) -> void:
+func from_dict(dict_data: Dictionary) -> void:
 	_parse_globals(dict_data)
 	
 	if dict_data.has("animations"):
@@ -28,7 +28,7 @@ func parse_dict(dict_data: Dictionary) -> void:
 
 func load_from_path(path: String):
 	var grid_spec_dict: Dictionary = JsonVFS.json_from_file(path)
-	parse_dict(grid_spec_dict)
+	from_dict(grid_spec_dict)
 
 ## Return all animation names
 func get_animation_names() -> Array:

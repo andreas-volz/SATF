@@ -25,10 +25,10 @@ func _init(parent_param: GridSpecAnimation, dict_data: Dictionary = {}) -> void:
 	if _parent == null:
 		push_error("Parent of GridSpecAnimation shouldn't be null!")
 	elif dict_data:
-		parse_dict(dict_data)
+		from_dict(dict_data)
 		pass
 
-func parse_dict(dict_data: Dictionary) -> void:
+func from_dict(dict_data: Dictionary) -> void:
 	if dict_data.has("frames"):
 		var frames_int := SATFUtils.array_to_array_int(dict_data.get("frames", []))
 		_frames.set_value(frames_int)

@@ -17,6 +17,20 @@ func equals(ref: AssetReference) -> bool:
 func clone() -> AssetReference:
 	return AssetReference.new(base_path, variant.get_or())
 
+func from_dict(dict: Dictionary) -> bool:
+	var result: bool = true
+	
+	if dict.has("base_path"):
+		base_path = dict["base_path"]
+	else:
+		push_warning("no 'base_path' in Dictionary")
+		result = false
+		
+	if dict.has("variant"):
+		variant.set_value(dict["variant"])
+		
+	return result
+
 func to_dict() -> Dictionary:
 	var asset_ref_dict: Dictionary = {}
 	

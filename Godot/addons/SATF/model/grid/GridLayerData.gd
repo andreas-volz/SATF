@@ -62,6 +62,6 @@ func to_dict() -> Dictionary:
 	return layer_data_dict
 	
 
-func parse_dict(dict_data: Dictionary):
+func from_dict(dict_data: Dictionary):
 	push_warning("Not yet implemented")
 	
