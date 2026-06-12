@@ -63,14 +63,29 @@ func clear() -> void:
 	_layers.clear()
 	_layer_lookup.clear()
 
+func from_dict(dict: Dictionary) -> bool:
+	var result: bool = true
+	
+	if dict.has("layers"):
+		var layers = dict["layers"]
+		clear()
+		if layers is Array:
+			for layer_dict in layers:
+				var layer := GridLayerData.new()
+				layer.from_dict(layer_dict)
+				add_layer(layer)
+	
+	return result
+
 func to_dict() -> Dictionary:
 	var layer_collection_dict: Dictionary = {}
 	
 	layer_collection_dict["layers"] = []
-	for layer:GridLayerData in _layers:
+	for layer: GridLayerData in _layers:
 		layer_collection_dict["layers"].append(layer.to_dict())
 	
 	return layer_collection_dict
+
 
 ## -----------------------------
 ## Internal helpers
